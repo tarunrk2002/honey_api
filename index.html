@@ -1,12 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-    </head>
-    <body>
-        <h1>hello world</h1>
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="title">testing <strong>honey pot</strong></h1>
+
+    <script>
+        // Honey pot script
+        document.addEventListener("DOMContentLoaded", async function () {
+            const url = window.location.href;
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/get_url", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ url: url }),
+                });
+
+                const aa = await response.json();
+                
+                if (aa.url === "good") {
+                    console.log("Honeypot check passed");
+                    window.location.href = "https://www.google.com";
+                } else {
+                    console.log("Honeypot check failed");
+                    document.getElementById("title").innerHTML = "Honeypot check failed";
+                }
+            } catch (error) {
+                console.error("Error during honeypot check:", error);
+            }
+        });
+    </script>
+</body>
 </html>
