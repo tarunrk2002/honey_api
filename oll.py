@@ -3,7 +3,7 @@ import ollama
 client = ollama.Client()
 
 response = client.generate(
-    model="llama3.2",
+    model="mistral",
     prompt= input("Enter your prompt: "))
 
 print(response.response)

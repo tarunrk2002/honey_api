@@ -5,14 +5,17 @@ url = "http://localhost:11434/api/chat"
 response = requests.post(
     url,
     json={
-        "model": "llama3.2",
+        "model": "mistral",
         "messages": [
             {
                 "role": "user",
                 "content": input("Enter your prompt: ")
             }
         ]
-    }
+    },
+    stream=True
 )
-print(type(response))
-print(response.status_code)
+
+for line in response.iter_lines():
+    
+        print(line.decode('utf-8'))
